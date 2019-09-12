@@ -1,12 +1,13 @@
 <template>
-    <div>
-        <form @submit="addToDo">
+    <div class="creator">
+        <form @submit="onSubmit">
             <input type="text" v-model="title" name="title" placeholder="Add ToDo...">
             <input type="submit" value="submit" class="btn">
         </form>
     </div>
 </template>
 <script>
+import {mapActions} from 'vuex';
 export default {
     name: 'to-do-create', 
     data() {
@@ -15,13 +16,11 @@ export default {
         }
     },
     methods: {
-        addToDo : function(e) {
+        ...mapActions(['addTodo']),
+
+        onSubmit : function(e) {
             e.preventDefault();
-            const newTodo = {
-                title: this.title,
-                completed: false
-            }
-            this.$emit('add-new', newTodo);
+            this.addTodo(this.title);
             this.title = '';
         }
     }
@@ -29,13 +28,23 @@ export default {
 </script>
 <style scoped>
 form {
-    display: flex
+  display: flex;
 }
-input[type='text'] {
-    flex: 10;
-    padding: 5px
+input[type="text"] {
+  flex: 10;
+  padding: 10px;
+  border: 1px solid #41b883;
+  outline: 0;
 }
-input[type='submit'] {
-    flex: 2
+input[type="submit"] {
+  flex: 2;
+  background: #41b883;
+  color: #fff;
+  border: 1px #41b883 solid;
+  cursor: pointer;
+}
+
+.creator {
+    margin-bottom: 10px;
 }
 </style>

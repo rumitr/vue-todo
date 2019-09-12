@@ -1,16 +1,19 @@
 <template>
-    <div class="todo-item" v-bind:class="{'is-completed': todo.completed}">
+    <div @dblclick="completeTodo(todo)" class="todo-item" v-bind:class="{'is-completed': todo.completed}">
         <p>
-            <input type="checkbox" v-model='todo.completed'>
             <h3>{{todo.title}}</h3>
-            <button @click="$emit('del-todo', todo.id)" class="del">x</button>
+            <button @click="deleteTodo(todo.id)" class="del">x</button>
         </p>
     </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 export default {
     name: 'to-do-list-item',
     props: ['todo'],
+    methods: {
+        ...mapActions(['deleteTodo', 'completeTodo']),
+    }
     
 }
 </script>
@@ -21,7 +24,7 @@ export default {
     border-bottom: 1px #ccc dotted;
 }
 .is-completed {
-    text-decoration: line-through;
+    background: #1e1594 !important;
 }
 .del {
     background: #ff0000;
